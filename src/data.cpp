@@ -16,6 +16,10 @@ namespace create {
     ADD_PACKET(ID_CLIFF_FRONT_LEFT, 1, "cliff_front_left", V_ALL);
     ADD_PACKET(ID_CLIFF_FRONT_RIGHT, 1, "cliff_front_right", V_ALL);
     ADD_PACKET(ID_CLIFF_RIGHT, 1, "cliff_right", V_ALL);
+    ADD_PACKET(ID_CLIFF_LEFT_SIGNAL, 2, "cliff_left_signal", V_3);
+    ADD_PACKET(ID_CLIFF_FRONT_LEFT_SIGNAL, 2, "cliff_front_left_signal", V_3);
+    ADD_PACKET(ID_CLIFF_FRONT_RIGHT_SIGNAL, 2, "cliff_front_right_signal", V_3);
+    ADD_PACKET(ID_CLIFF_RIGHT_SIGNAL, 2, "cliff_right_signal", V_3);
     ADD_PACKET(ID_VIRTUAL_WALL, 1, "virtual_wall", V_ALL);
     ADD_PACKET(ID_OVERCURRENTS, 1, "overcurrents", V_ALL);
     ADD_PACKET(ID_DIRT_DETECT_LEFT, 1, "dirt_detect_left", V_ALL);

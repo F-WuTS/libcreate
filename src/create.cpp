@@ -738,6 +738,46 @@ namespace create {
     }
   }
 
+  uint16_t Create::getCliffSignalLeft() const {
+    if (data->isValidPacketID(ID_CLIFF_LEFT)) {
+      return GET_DATA(ID_CLIFF_LEFT_SIGNAL);
+    }
+    else {
+      CERR("[create::Create] ", "Left cliff sensor signals not supported!");
+      return false;
+      }
+  }
+
+  uint16_t Create::getCliffSignalFrontLeft() const {
+    if (data->isValidPacketID(ID_CLIFF_FRONT_LEFT)) {
+      return GET_DATA(ID_CLIFF_FRONT_LEFT_SIGNAL);
+    }
+    else {
+      CERR("[create::Create] ", "Front left cliff sensor signals not supported!");
+      return false;
+    }
+  }
+
+  uint16_t Create::getCliffSignalRight() const {
+    if (data->isValidPacketID(ID_CLIFF_RIGHT)) {
+      return GET_DATA(ID_CLIFF_RIGHT_SIGNAL);
+    }
+    else {
+      CERR("[create::Create] ", "Rightt cliff sensor signals not supported!");
+      return false;
+    }
+  }
+
+  uint16_t Create::getCliffSignalFrontRight() const {
+    if (data->isValidPacketID(ID_CLIFF_FRONT_RIGHT)) {
+      return GET_DATA(ID_CLIFF_FRONT_RIGHT_SIGNAL);
+    }
+    else {
+      CERR("[create::Create] ", "Front right cliff sensor signals not supported!");
+      return false;
+    }
+  }
+
   bool Create::isVirtualWall() const {
     if (data->isValidPacketID(ID_VIRTUAL_WALL)) {
       return GET_DATA(ID_VIRTUAL_WALL);

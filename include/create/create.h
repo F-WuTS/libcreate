@@ -407,6 +407,26 @@ namespace create {
       bool isCliffFrontRight() const;
 
       /**
+       * \return true if the left sensor detects a cliff, false otherwise.
+       */
+      uint16_t getCliffSignalLeft() const;
+
+      /**
+       * \return true if the front left sensor detects a cliff, false otherwise.
+       */
+      uint16_t getCliffSignalFrontLeft() const;
+
+      /**
+       * \return true if the right sensor detects a cliff, false otherwise.
+       */
+      uint16_t getCliffSignalRight() const;
+
+      /**
+       * \return true if the front right sensor detects a cliff, false otherwise.
+       */
+      uint16_t getCliffSignalFrontRight() const;
+
+      /**
        * \return true if there is a virtual wall signal is being received.
        */
       bool isVirtualWall() const;
