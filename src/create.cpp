@@ -156,16 +156,22 @@ namespace create {
       // Compute ticks since last update
       int ticksLeft = totalTicksLeft - prevTicksLeft;
       int ticksRight = totalTicksRight - prevTicksRight;
-      prevTicksLeft = totalTicksLeft;
-      prevTicksRight = totalTicksRight;
 
       // Handle wrap around
-      if (std::abs(ticksLeft) > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
-        ticksLeft = (ticksLeft % util::V_3_MAX_ENCODER_TICKS) + 1;
+      if (ticksLeft > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksLeft = 2 * util::V_3_MAX_ENCODER_TICKS + prevTicksLeft - ticksLeft;
+      } else if (ticksLeft < 0.9 * -util::V_3_MAX_ENCODER_TICKS) {
+        ticksLeft = util::V_3_MAX_ENCODER_TICKS - prevTicksLeft + util::V_3_MAX_ENCODER_TICKS + ticksLeft;
       }
-      if (std::abs(ticksRight) > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
-        ticksRight = (ticksRight % util::V_3_MAX_ENCODER_TICKS) + 1;
+
+      if (ticksRight > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksRight = util::V_3_MAX_ENCODER_TICKS + prevTicksRight + util::V_3_MAX_ENCODER_TICKS - ticksRight;
+      } else if (ticksLeft < 0.9 * -util::V_3_MAX_ENCODER_TICKS) {
+        ticksRight = util::V_3_MAX_ENCODER_TICKS - prevTicksRight + util::V_3_MAX_ENCODER_TICKS + ticksRight;
       }
+
+      prevTicksLeft = totalTicksLeft;
+      prevTicksRight = totalTicksRight;
 
       // Compute distance travelled by each wheel
       leftWheelDist = (ticksLeft / util::V_3_TICKS_PER_REV)
