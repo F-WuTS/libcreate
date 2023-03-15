@@ -157,18 +157,18 @@ namespace create {
       int ticksLeft = totalTicksLeft - prevTicksLeft;
       int ticksRight = totalTicksRight - prevTicksRight;
 
-      // Handle wrap around
-      if (ticksLeft > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
-        ticksLeft = 2 * util::V_3_MAX_ENCODER_TICKS + prevTicksLeft - ticksLeft;
-      } else if (ticksLeft < 0.9 * -util::V_3_MAX_ENCODER_TICKS) {
-        ticksLeft = util::V_3_MAX_ENCODER_TICKS - prevTicksLeft + util::V_3_MAX_ENCODER_TICKS + ticksLeft;
-      }
+    // Handle wrap around
+    if (ticksLeft > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksLeft -= util::V_3_MAX_ENCODER_TICKS;
+    } else if (ticksLeft < -0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksLeft += util::V_3_MAX_ENCODER_TICKS;
+    }
 
-      if (ticksRight > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
-        ticksRight = util::V_3_MAX_ENCODER_TICKS + prevTicksRight + util::V_3_MAX_ENCODER_TICKS - ticksRight;
-      } else if (ticksLeft < 0.9 * -util::V_3_MAX_ENCODER_TICKS) {
-        ticksRight = util::V_3_MAX_ENCODER_TICKS - prevTicksRight + util::V_3_MAX_ENCODER_TICKS + ticksRight;
-      }
+    if (ticksRight > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksRight -= util::V_3_MAX_ENCODER_TICKS;
+    } else if (ticksRight < -0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksRight += util::V_3_MAX_ENCODER_TICKS;
+    }
 
       prevTicksLeft = totalTicksLeft;
       prevTicksRight = totalTicksRight;
