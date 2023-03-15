@@ -156,16 +156,22 @@ namespace create {
       // Compute ticks since last update
       int ticksLeft = totalTicksLeft - prevTicksLeft;
       int ticksRight = totalTicksRight - prevTicksRight;
+
+    // Handle wrap around
+    if (ticksLeft > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksLeft -= util::V_3_MAX_ENCODER_TICKS;
+    } else if (ticksLeft < -0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksLeft += util::V_3_MAX_ENCODER_TICKS;
+    }
+
+    if (ticksRight > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksRight -= util::V_3_MAX_ENCODER_TICKS;
+    } else if (ticksRight < -0.9 * util::V_3_MAX_ENCODER_TICKS) {
+        ticksRight += util::V_3_MAX_ENCODER_TICKS;
+    }
+
       prevTicksLeft = totalTicksLeft;
       prevTicksRight = totalTicksRight;
-
-      // Handle wrap around
-      if (std::abs(ticksLeft) > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
-        ticksLeft = (ticksLeft % util::V_3_MAX_ENCODER_TICKS) + 1;
-      }
-      if (std::abs(ticksRight) > 0.9 * util::V_3_MAX_ENCODER_TICKS) {
-        ticksRight = (ticksRight % util::V_3_MAX_ENCODER_TICKS) + 1;
-      }
 
       // Compute distance travelled by each wheel
       leftWheelDist = (ticksLeft / util::V_3_TICKS_PER_REV)
@@ -734,6 +740,46 @@ namespace create {
     }
     else {
       CERR("[create::Create] ", "Front right cliff sensors not supported!");
+      return false;
+    }
+  }
+
+  uint16_t Create::getCliffSignalLeft() const {
+    if (data->isValidPacketID(ID_CLIFF_LEFT)) {
+      return GET_DATA(ID_CLIFF_LEFT_SIGNAL);
+    }
+    else {
+      CERR("[create::Create] ", "Left cliff sensor signals not supported!");
+      return false;
+      }
+  }
+
+  uint16_t Create::getCliffSignalFrontLeft() const {
+    if (data->isValidPacketID(ID_CLIFF_FRONT_LEFT)) {
+      return GET_DATA(ID_CLIFF_FRONT_LEFT_SIGNAL);
+    }
+    else {
+      CERR("[create::Create] ", "Front left cliff sensor signals not supported!");
+      return false;
+    }
+  }
+
+  uint16_t Create::getCliffSignalRight() const {
+    if (data->isValidPacketID(ID_CLIFF_RIGHT)) {
+      return GET_DATA(ID_CLIFF_RIGHT_SIGNAL);
+    }
+    else {
+      CERR("[create::Create] ", "Rightt cliff sensor signals not supported!");
+      return false;
+    }
+  }
+
+  uint16_t Create::getCliffSignalFrontRight() const {
+    if (data->isValidPacketID(ID_CLIFF_FRONT_RIGHT)) {
+      return GET_DATA(ID_CLIFF_FRONT_RIGHT_SIGNAL);
+    }
+    else {
+      CERR("[create::Create] ", "Front right cliff sensor signals not supported!");
       return false;
     }
   }
