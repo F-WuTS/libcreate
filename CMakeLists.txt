@@ -84,6 +84,8 @@ endforeach()
 # Configuration #
 #################
 
+set(CMAKE_INSTALL_PREFIX "/usr/")
+
 # Install directories layout:
 #   * <prefix>/lib/
 #   * <prefix>/bin/
