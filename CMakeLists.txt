@@ -84,7 +84,7 @@ endforeach()
 # Configuration #
 #################
 
-set(CMAKE_INSTALL_PREFIX "/usr/")
+# set(CMAKE_INSTALL_PREFIX "/usr/") // complib needs  this, riplib doesn't
 
 # Install directories layout:
 #   * <prefix>/lib/

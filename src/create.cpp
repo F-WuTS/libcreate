@@ -67,6 +67,15 @@ namespace create {
     disconnect();
   }
 
+  void Create::reset() {
+    if (!connected()) {
+      CERR("[create::Serial] ", "send failed, not connected.");
+      return;
+    }
+    serial->sendOpcode(OC_START);
+    serial->sendOpcode(OC_RESET);
+  }
+
   Create::Matrix Create::addMatrices(const Matrix &A, const Matrix &B) const {
     size_t rows = A.size1();
     size_t cols = A.size2();

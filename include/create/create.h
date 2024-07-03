@@ -136,6 +136,11 @@ namespace create {
       ~Create();
 
       /**
+       * \brief Resets the create as if the battery was removed and reinserted.
+       */
+      void reset();
+
+      /**
        * \brief Make a serial connection to Create.
        *
        * This is the first thing that should be done after instantiated this class.
