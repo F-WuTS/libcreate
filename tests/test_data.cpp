@@ -65,11 +65,11 @@ TEST(DataTest, GetNumPackets)
 
   create::Data data_v_3(create::V_3);
   // Number exclusive to V_3 = 13
-  // 17 + 13 = 30
-  EXPECT_EQ(static_cast<int>(data_v_3.getNumPackets()), 30);
+  // 17 + 17 = 34
+  EXPECT_EQ(static_cast<int>(data_v_3.getNumPackets()), 34);
 
   create::Data data_v_all(create::V_ALL);
-  EXPECT_EQ(static_cast<int>(data_v_all.getNumPackets()), 33);
+  EXPECT_EQ(static_cast<int>(data_v_all.getNumPackets()), 37);
 }
 
 TEST(DataTest, GetPacket)
@@ -108,7 +108,7 @@ TEST(DataTest, GetPacketIDs)
   create::Data data_v_3(create::V_3);
   const std::vector<uint8_t> packet_ids = data_v_3.getPacketIDs();
   // Vector should have same length as reported by getNumPackets()
-  ASSERT_EQ(static_cast<int>(packet_ids.size()), 30);
+  ASSERT_EQ(static_cast<int>(packet_ids.size()), 34);
 
   // Vector should contain ID_LEFT_ENC
   bool found = false;
@@ -133,9 +133,9 @@ TEST(DataTest, GetTotalDataBytes)
   create::Data data_v_2(create::V_2);
   EXPECT_EQ(static_cast<int>(data_v_2.getTotalDataBytes()), 26);
 
-  // V_3 has an additional 21 bytes
+  // V_3 has an additional 29 bytes
   create::Data data_v_3(create::V_3);
-  EXPECT_EQ(static_cast<int>(data_v_3.getTotalDataBytes()), 42);
+  EXPECT_EQ(static_cast<int>(data_v_3.getTotalDataBytes()), 50);
 }
 
 TEST(DataTest, IsValidPacketID)
