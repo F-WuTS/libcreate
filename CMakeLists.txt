@@ -5,7 +5,7 @@
 #    target_link_libraries(... ${libcreate_LIBRARIES})
 #
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.28)
 project(libcreate)
 
 add_compile_options(-Wall -Wextra -Wpedantic)
@@ -203,3 +203,10 @@ if(LIBCREATE_BUILD_TESTS AND ${GTEST_FOUND})
 else()
   message("No GTest installation found. Skipping tests.")
 endif()
+
+#############
+# Packaging #
+#############
+
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(Packing)
