@@ -2,6 +2,8 @@
 # Setup #
 #########
 
+cmake_minimum_required(VERSION 3.25)
+
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(Versioning)
@@ -17,7 +19,6 @@ include(Versioning)
 #    target_link_libraries(... ${libcreate_LIBRARIES})
 #
 
-cmake_minimum_required(VERSION 3.28)
 project(
   libcreate 
   VERSION ${TAG_VERSION_MAJOR}.${TAG_VERSION_MINOR}.${TAG_VERSION_PATCH}
