@@ -29,3 +29,11 @@ jobs:
         run: docker buildx build -f ci/Dockerfile . -t libcreate --platform ${{ matrix.platform }} --load
       - name: Build
         run: docker run --platform ${{ matrix.platform }} -v ./output:/libcreate/_packages libcreate
+      - name: Push deb to compREP
+        uses: cpina/github-action-push-to-another-repository@main
+        with:
+          source-directory: "output/"
+          target-directory: "debs/complib/"
+          destination-github-username: "F-WuTS"
+          destination-repository-name: "compREP"
+          target-branch: master
