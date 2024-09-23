@@ -2,6 +2,8 @@ name: Package
 
 on:
   push:
+    tags:
+      - "**"
 
 jobs:
   package:

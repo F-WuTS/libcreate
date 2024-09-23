@@ -8,6 +8,11 @@ if(GIT_EXECUTABLE)
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
 
+    if(DEFINED ENV{GITHUB_REF})
+        set(TAG_VERSION $ENV{GITHUB_REF})
+        message(STATUS "Extracted version from GITHUB_REF")
+    endif()
+
     if(TAG_VERSION STREQUAL "")
         set(TAG_VERSION 0.0.0)
         message(WARNING "Failed to determine version from Git tags. Using default version \"${TAG_VERSION}\".")
