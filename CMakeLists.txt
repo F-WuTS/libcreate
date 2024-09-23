@@ -1,3 +1,15 @@
+#########
+# Setup #
+#########
+
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+include(Versioning)
+
+########
+# Main #
+########
+
 # After installation this project can be found by 'find_package' command:
 #
 #    find_package(libcreate REQUIRED)
@@ -6,11 +18,14 @@
 #
 
 cmake_minimum_required(VERSION 3.28)
-project(libcreate)
+project(
+  libcreate 
+  VERSION ${TAG_VERSION_MAJOR}.${TAG_VERSION_MINOR}.${TAG_VERSION_PATCH}
+)
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
-set(PACKAGE_VERSION 3.0.0)
+set(PACKAGE_VERSION ${TAG_VERSION_MAJOR}.${TAG_VERSION_MINOR}.${TAG_VERSION_PATCH})
 
 option(LIBCREATE_BUILD_TESTS "Enable the build of tests." ON)
 
@@ -208,5 +223,4 @@ endif()
 # Packaging #
 #############
 
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(Packing)
