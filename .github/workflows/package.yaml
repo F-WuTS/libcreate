@@ -35,7 +35,7 @@ jobs:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         with:
           source-directory: "output/"
-          target-directory: "debs/complib/"
+          target-directory: "debs/libcreate/"
           destination-github-username: "F-WuTS"
           destination-repository-name: "compREP"
           target-branch: master
