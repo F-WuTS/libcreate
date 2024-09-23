@@ -15,16 +15,13 @@ include(Versioning)
 # After installation this project can be found by 'find_package' command:
 #
 #    find_package(libcreate REQUIRED)
-#    include_directores(${libcreate_INCLUDE_DIRS})
-#    target_link_libraries(... ${libcreate_LIBRARIES})
+#    target_link_libraries(... libcreate)
 #
 
 project(
   libcreate 
   VERSION ${TAG_VERSION_MAJOR}.${TAG_VERSION_MINOR}.${TAG_VERSION_PATCH}
 )
-
-add_compile_options(-Wall -Wextra -Wpedantic)
 
 set(PACKAGE_VERSION ${TAG_VERSION_MAJOR}.${TAG_VERSION_MINOR}.${TAG_VERSION_PATCH})
 
@@ -59,6 +56,8 @@ add_library(${LIBRARY_NAME} SHARED
   src/packet.cpp
   src/types.cpp
 )
+
+target_compile_options(${LIBRARY_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
 # Manually link to thread library for build on ARM
 if(THREADS_HAVE_PTHREAD_ARG)
@@ -100,43 +99,9 @@ endforeach()
 # Configuration #
 #################
 
+include(GNUInstallDirs)
+
 # set(CMAKE_INSTALL_PREFIX "/usr/") // complib needs  this, riplib doesn't
-
-# Install directories layout:
-#   * <prefix>/lib/
-#   * <prefix>/bin/
-#   * <prefix>/include/
-#   * <prefix>/lib/cmake/<PROJECT-NAME>
-#   * <prefix>/share/<PROJECT_NAME>
-set(LIB_INSTALL_DIR "lib")
-set(BIN_INSTALL_DIR "bin")
-set(INCLUDE_INSTALL_DIR "include")
-set(CONFIG_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake/${PROJECT_NAME}")
-set(SHARE_INSTALL_DIR "share/${PROJECT_NAME}")
-
-set(GENERATED_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
-set(VERSION_CONFIG "${GENERATED_DIR}/${PROJECT_NAME}-config-version.cmake")
-set(PROJECT_CONFIG "${GENERATED_DIR}/${PROJECT_NAME}-config.cmake")
-set(TARGETS_EXPORT_NAME "${PROJECT_NAME}-targets")
-
-include(CMakePackageConfigHelpers)
-
-# Configure '<PROJECT-NAME>-config-version.cmake'
-write_basic_package_version_file(
-  "${VERSION_CONFIG}"
-  VERSION "${PACKAGE_VERSION}"
-  COMPATIBILITY SameMajorVersion
-)
-
-# Configure '<PROJECT-NAME>-config.cmake'
-configure_package_config_file(
-  "config.cmake.in"
-  "${PROJECT_CONFIG}"
-  INSTALL_DESTINATION "${CONFIG_INSTALL_DIR}"
-  PATH_VARS
-    INCLUDE_INSTALL_DIR
-    LIBRARY_NAME
-)
 
 ###########
 # Install #
@@ -144,38 +109,26 @@ configure_package_config_file(
 
 # Install targets
 install(
-  TARGETS ${LIBRARY_NAME}
-  EXPORT "${TARGETS_EXPORT_NAME}"
-  LIBRARY DESTINATION "${LIB_INSTALL_DIR}"
-  ARCHIVE DESTINATION "${LIB_INSTALL_DIR}"
-  RUNTIME DESTINATION "${BIN_INSTALL_DIR}"
-  INCLUDES DESTINATION "${INCLUDE_INSTALL_DIR}"
-)
-
-# Install headers
-install(
-  DIRECTORY include/
-  DESTINATION ${INCLUDE_INSTALL_DIR}
-  FILES_MATCHING PATTERN "*.h"
-  PATTERN ".svn" EXCLUDE
-)
+    TARGETS ${LIBRARY_NAME}
+    EXPORT ${LIBRARY_NAME}-config
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Install config
 install(
-  FILES "${PROJECT_CONFIG}" "${VERSION_CONFIG}"
-  DESTINATION "${CONFIG_INSTALL_DIR}"
-)
+    EXPORT ${LIBRARY_NAME}-config
+    NAMESPACE create::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${LIBRARY_NAME})
 
-# Install targets
-install(
-  EXPORT "${TARGETS_EXPORT_NAME}"
-  DESTINATION "${CONFIG_INSTALL_DIR}"
-)
+# Install headers
+install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/${LIBRARY_NAME}/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${LIBRARY_NAME})
 
 # Install package.xml (for catkin)
 install(
   FILES package.xml
-  DESTINATION ${SHARE_INSTALL_DIR}
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}
 )
 
 ###########

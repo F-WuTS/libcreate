@@ -2,7 +2,7 @@ FROM debian:bookworm
 
 RUN apt update && \
     apt install -y \
-        build-essential cmake git file \
+        build-essential cmake git file tree \
         libboost-system-dev libboost-thread-dev \
         libgtest-dev googletest && \
     rm -rf /var/lib/apt/lists/*
