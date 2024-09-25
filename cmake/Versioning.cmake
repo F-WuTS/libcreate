@@ -8,7 +8,7 @@ if(GIT_EXECUTABLE)
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
 
-    if(DEFINED ENV{GITHUB_REF})
+    if(DEFINED ENV{GITHUB_REF} AND ENV{GITHUB_REF_TYPE} EQUAL "tag")
         set(TAG_VERSION $ENV{GITHUB_REF})
         message(STATUS "Extracted version from GITHUB_REF")
     endif()
