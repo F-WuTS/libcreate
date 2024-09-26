@@ -1,0 +1,3 @@
+# CMake/CPack
+build/
+_packages/
