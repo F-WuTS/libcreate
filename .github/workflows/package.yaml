@@ -7,7 +7,9 @@ on:
 
 jobs:
   package:
-    runs-on: ubuntu-24.04
+    runs-on:
+      group: Default
+
     strategy:
       matrix:
         platform: [linux/arm64/v8]
