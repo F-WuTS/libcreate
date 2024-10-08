@@ -2,8 +2,7 @@ name: Build and test
 
 on:
   push:
-    branches:
-      - master
+    branches: ["master"]
   pull_request:
 
 env:
@@ -11,8 +10,7 @@ env:
 
 jobs:
   test:
-    runs-on:
-      group: Default
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Install dependencies
